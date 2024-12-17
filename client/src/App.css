@@ -1,0 +1,189 @@
+/* App.css */
+.app {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+}
+
+.information {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+input[type="file"], input[type="number"], select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+}
+
+input[type="file"] {
+  border: none;
+}
+
+select {
+  cursor: pointer;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+input[type="file"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+p {
+  color: #666;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+.information {
+  max-width: 900px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+input, select, button {
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.showdata {
+  margin-top: 30px;
+}
+
+.facture-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.facture-card {
+  background-color: #f8f8f8;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.facture-card .facture-details {
+  margin-bottom: 15px;
+}
+
+.file-preview img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.pdf-container {
+  width: 100%;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+button {
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+.facture-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.facture-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.facture-details {
+  margin-bottom: 10px;
+}
+
+.file-preview {
+  margin-top: 10px;
+}
+
+.pdf-container {
+  position: relative;
+}
+
+.pdf-container button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pdf-container button:hover {
+  background-color: #0056b3;
+}
