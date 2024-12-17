@@ -27,7 +27,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "myfacture_manager", // Updated database name
+  database: "myfacture_manager",
 });
 
 db.connect((err) => {
@@ -42,14 +42,16 @@ db.connect((err) => {
 app.post("/create", upload.single("file"), (req, res) => {
   const { price, category, paymentStatus } = req.body;
 
-  if (!req.file || !price || !category || !paymentStatus) {
+  // Validation
+  if (!req.file || !price || !category) {
     return res.status(400).json({ message: "Missing required fields or file." });
   }
 
   const filePath = `uploads/${req.file.filename}`;
+  const status = paymentStatus || "unpaid"; // Default to 'unpaid'
 
   const query = "INSERT INTO mydata (file, price, category, status) VALUES (?, ?, ?, ?)";
-  db.query(query, [filePath, price, category, paymentStatus], (err, result) => {
+  db.query(query, [filePath, price, category, status], (err, result) => {
     if (err) {
       console.error("Database Error:", err);
       return res.status(500).json({ message: "Database error.", error: err });
@@ -60,13 +62,18 @@ app.post("/create", upload.single("file"), (req, res) => {
 
 // GET Endpoint: Fetch All Factures
 app.get("/factures", (req, res) => {
-  const query = "SELECT * FROM mydata";
+  const query = "SELECT *, status AS paymentStatus FROM mydata";
   db.query(query, (err, results) => {
     if (err) {
-      console.error("Error fetching factures:", err.sqlMessage || err);
+      console.error("Error fetching factures:", err);
       return res.status(500).json({ message: "Failed to fetch factures", error: err });
     }
-    res.status(200).json(results);
+    // Ensure all 'price' values are numbers
+    const formattedResults = results.map((facture) => ({
+      ...facture,
+      price: parseFloat(facture.price), // Ensures price is a number
+    }));
+    res.status(200).json(formattedResults);
   });
 });
 

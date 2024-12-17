@@ -64,6 +64,29 @@ function App() {
     setFile(selectedFile);
   };
 
+  // Group data by category
+  const groupedData = showData.reduce((acc, facture) => {
+    if (!acc[facture.category]) {
+      acc[facture.category] = [];
+    }
+    acc[facture.category].push(facture);
+    return acc;
+  }, {});
+
+  // Helper function to get the category name
+  const getCategoryName = (category) => {
+    switch (category) {
+      case "option1":
+        return "Quality Control";
+      case "option2":
+        return "Packaging";
+      case "option3":
+        return "Tickets";
+      default:
+        return category;
+    }
+  };
+
   return (
     <div className="app">
       <div className="information">
@@ -83,9 +106,9 @@ function App() {
           <label>Select a Category:</label>
           <select value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="">--Please select--</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            <option value="option1">Quality Control</option>
+            <option value="option2">Packaging</option>
+            <option value="option3">Tickets</option>
           </select>
 
           <label>Paid or Not:</label>
@@ -103,35 +126,59 @@ function App() {
         <hr />
 
         <section className="showdata">
-          <h1>Show Data for All Categories</h1>
-          <button onClick={bringData}>Refresh Data</button>
-          <div className="facture-cards">
-            {showData.length > 0 ? (
-              showData.map((facture, index) => (
-                <div key={index} className="facture-card">
-                  <p>
-                    <strong>Price:</strong> {facture.price}<strong>DH</strong>
-                  </p>
-                  <p>
-                    <strong>Category:</strong> {facture.category}
-                  </p>
-                  <p>
-                    <strong>Status:</strong> {facture.status}
-                  </p>
-                  {facture.file && (
-                    <div>
-                      <a href={`http://localhost:3001/${facture.file}`} target="_blank" rel="noopener noreferrer">
-                        View File
-                      </a>
-                    </div>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p>No data available.</p>
+  <h1>Factures by Category</h1>
+  <button onClick={bringData}>Refresh Data</button>
+
+  {Object.entries(groupedData).map(([category, factures], index) => (
+    <div key={index} className="category-section">
+      <h2>
+        {getCategoryName(category)}{" "}
+        <span className="total-price">
+          Total Unpaid:{" "}
+          {factures
+            .filter((facture) => facture.paymentStatus === "unpaid")
+            .reduce((sum, facture) => sum + parseFloat(facture.price), 0)}{" "}
+          DH
+        </span>
+      </h2>
+      <div className="facture-cards">
+        {factures.map((facture, idx) => (
+          <div key={idx} className="facture-card">
+            <p>
+              <strong>Price:</strong> {facture.price} <strong>DH</strong>
+            </p>
+            <p>
+              <strong>Category:</strong> {getCategoryName(facture.category)}
+            </p>
+            <p>
+              <strong>Status:</strong> {facture.paymentStatus || "Unknown"}
+            </p>
+            {facture.file && (
+              <div>
+                <a
+                  href={`http://localhost:3001/${facture.file}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View File
+                </a>
+              </div>
             )}
           </div>
-        </section>
+        ))}
+      </div>
+      <span className="category-total">
+        Total Price in Category:{" "}
+        {factures.reduce(
+          (sum, facture) => sum + parseFloat(facture.price),
+          0
+        )}{" "}
+        DH
+      </span>
+    </div>
+  ))}
+</section>
+
       </div>
     </div>
   );
