@@ -1,2 +1,7 @@
+[build]
+command = "npm run build"  # If there's no build step, leave it empty.
+publish = "public"         # Path to your static assets, if any.
+functions = "netlify/functions"
+
 [[plugins]]
-  package = "@netlify/plugin-nextjs"
+package = "@netlify/plugin-functions-core"
